@@ -1,7 +1,30 @@
-﻿using Microsoft.Win32;
+﻿//============================================================================
+// DeskNote 1.x
+// Copyright © 2025 Stephanowicz
+// 
+// <https://github.com/Stephanowicz/DeskNote>
+// 
+//This file is part of DeskNote.
+//
+//DeskNote is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//DeskNote is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with DeskNote.  If not, see <http://www.gnu.org/licenses/>.
+//
+//============================================================================
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -316,8 +339,11 @@ namespace DeskNote
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*";
             if (deskNoteForm.imgBack.UriSource != null && System.IO.File.Exists(deskNoteForm.imgBack.UriSource.AbsolutePath))
+            {
                 openFileDialog.InitialDirectory = System.IO.Directory.GetParent(deskNoteForm.imgBack.UriSource.AbsolutePath).FullName;
                 openFileDialog.FileName = System.IO.Path.GetFileName(deskNoteForm.imgBack.UriSource.AbsolutePath);
+            }
+            else openFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             if (openFileDialog.ShowDialog() == true)
             {
                 deskNoteForm.imgBack = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.RelativeOrAbsolute));
@@ -326,7 +352,7 @@ namespace DeskNote
                 deskNoteForm._BckgrPic = true;
                 deskNoteForm.SetBckgrPicColor();
                 _getColorPixel();
-//                sliderRedMatrix.Value = sliderGreenMatrix.Value = sliderBlueMatrix.Value = 10;
+                //                sliderRedMatrix.Value = sliderGreenMatrix.Value = sliderBlueMatrix.Value = 10;
             }
         }
 
