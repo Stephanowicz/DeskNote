@@ -1,0 +1,12 @@
+﻿<Window x:Class="DeskNote.newURL"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="newURL" Height="128" Width="209" ResizeMode="NoResize">
+    <Grid>
+        <TextBox x:Name="tbURLName" HorizontalAlignment="Left" Height="26" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" TextChanged="tbURLName_TextChanged" KeyUp="tbURLName_KeyUp"/>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="75" Height="27" Click="btnOK_Click" IsEnabled="False"/>
+        <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="117,64,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.24,0.5" Height="27" Click="btnCancel_Click"/>
+        <Label x:Name="lblLink" Content="" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Width="182"/>
+
+    </Grid>
+</Window>

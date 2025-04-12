@@ -1,0 +1,9 @@
+﻿<Window x:Name="TextEdit1" x:Class="DeskNote.TextEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TextEdit" Height="101" Width="95" ResizeMode="CanResizeWithGrip" WindowStyle="ToolWindow" ShowInTaskbar="False" Topmost="True" Background="White">
+    <Grid Margin="0,0,0,0">
+        <TextBox x:Name="_textBox" TextWrapping="Wrap" Text="" RenderTransformOrigin="0,0" IsManipulationEnabled="True" AcceptsReturn="True" BorderThickness="0" Background="{x:Null}"/>
+
+    </Grid>
+</Window>
