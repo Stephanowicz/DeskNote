@@ -36,6 +36,7 @@ using System.Windows.Controls.Primitives;
 using System.Drawing.Imaging;
 using System;
 
+
 namespace DeskNote
 {
     /// <summary>
@@ -612,6 +613,9 @@ namespace DeskNote
             else
                 _rtbCM_Insert.IsEnabled = false;
 
+            if (Clipboard.GetDataObject() != null && Clipboard.GetDataObject().GetDataPresent(DataFormats.Html)) _rtbCM_paste_html.IsEnabled = true;
+            else _rtbCM_paste_html.IsEnabled = false;
+
             _rtbCM_newURL.IsEnabled = false;
             _rtbCM_deleteURL.IsEnabled = false;
             _rtbCM_editURL.IsEnabled = false;
@@ -655,16 +659,18 @@ namespace DeskNote
                         _imageContainer = null;
                     }
                 }
+                //try to get image, if selected and add adorner for resizing
+                //it's sometimes nested in a 'Run' or without an InlineUIContainer
                 else
                 {
                     var sel = _richTextBox.Selection.Start.GetAdjacentElement(LogicalDirection.Forward);
                     if (sel != null)
                     {
-                        //if (sel.GetType() == typeof(System.Windows.Documents.Run))
-                        //{
-                        //    _richTextBox.Selection.Select(((Run)(sel)).ElementStart, ((Run)(sel)).ElementEnd);
-                        //    sel = _richTextBox.Selection.Start.GetAdjacentElement(LogicalDirection.Forward);
-                        //}
+                        if (sel.GetType() == typeof(System.Windows.Documents.Run))
+                        {
+                            sel = ((Run)sel).NextInline;
+
+                        }
                         if (sel.GetType() == typeof(System.Windows.Documents.InlineUIContainer))
                         {
                             if (((InlineUIContainer)sel).Child.GetType() == typeof(System.Windows.Controls.Image))
@@ -1878,25 +1884,31 @@ namespace DeskNote
         }
 
         ////Textbox-ContextMenue
+        
+        //Paste copied data from website (HTML DataFormat)
+        //only working with MS-Word installed
         private void cmPasteHTML_click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var dataObject = Clipboard.GetDataObject();
-                var textData = dataObject.GetData(DataFormats.Html);
-                if (textData != null)
+                if (dataObject.GetDataPresent(DataFormats.Html))
                 {
-                    Type wordType = Type.GetTypeFromProgID("Word.Application");
-                    if (wordType != null)
+                    var textData = dataObject.GetData(DataFormats.Html);
+                    if (textData != null)
                     {
-                        dynamic msword = Activator.CreateInstance(wordType);
-                        msword.Visible = false;
-                        msword.Documents.Add();
-                        msword.Windows[1].Selection.Paste();
-                        msword.Windows[1].Selection.WholeStory();
-                        msword.Windows[1].Selection.Copy();
-                        _richTextBox.Paste();
-                        msword.Quit(wordDoNotSaveChanges);
+                        Type wordType = Type.GetTypeFromProgID("Word.Application");
+                        if (wordType != null)
+                        {
+                            dynamic msword = Activator.CreateInstance(wordType);
+                            msword.Visible = false;
+                            msword.Documents.Add();
+                            msword.Windows[1].Selection.Paste();
+                            msword.Windows[1].Selection.WholeStory();
+                            msword.Windows[1].Selection.Copy();
+                            _richTextBox.Paste();
+                            msword.Quit(wordDoNotSaveChanges);
+                        }
                     }
                 }
             }
@@ -3083,8 +3095,17 @@ namespace DeskNote
 
             // Change the size by the amount the user drags the mouse, as long as it's larger  
             // than the width or height of an adorner, respectively. 
-            adornedElement.Width = Math.Max(adornedElement.Width + args.HorizontalChange, hitThumb.DesiredSize.Width);
-            adornedElement.Height = Math.Max(args.VerticalChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+            if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Control)
+            {
+                double dChange = args.HorizontalChange != 0 ? args.HorizontalChange : args.VerticalChange;
+                adornedElement.Width = Math.Max(adornedElement.Width + dChange, hitThumb.DesiredSize.Width);
+                adornedElement.Height = Math.Max(dChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+            }
+            else
+            {
+                adornedElement.Width = Math.Max(adornedElement.Width + args.HorizontalChange, hitThumb.DesiredSize.Width);
+                adornedElement.Height = Math.Max(args.VerticalChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+            }
         }
 
         // Handler for resizing from the bottom-left. 
