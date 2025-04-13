@@ -34,6 +34,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Windows.Controls.Primitives;
 using System.Drawing.Imaging;
+using System;
 
 namespace DeskNote
 {
@@ -657,22 +658,28 @@ namespace DeskNote
                 else
                 {
                     var sel = _richTextBox.Selection.Start.GetAdjacentElement(LogicalDirection.Forward);
-                    if(sel.GetType() == typeof(System.Windows.Documents.InlineUIContainer))
+                    if (sel != null)
                     {
-                        if(((InlineUIContainer)sel).Child.GetType() == typeof(System.Windows.Controls.Image))
+                        //if (sel.GetType() == typeof(System.Windows.Documents.Run))
+                        //{
+                        //    _richTextBox.Selection.Select(((Run)(sel)).ElementStart, ((Run)(sel)).ElementEnd);
+                        //    sel = _richTextBox.Selection.Start.GetAdjacentElement(LogicalDirection.Forward);
+                        //}
+                        if (sel.GetType() == typeof(System.Windows.Documents.InlineUIContainer))
                         {
-                            _imageContainer = (InlineUIContainer)sel;
-                            _Adorner(_imageContainer);
+                            if (((InlineUIContainer)sel).Child.GetType() == typeof(System.Windows.Controls.Image))
+                            {
+                                _imageContainer = (InlineUIContainer)sel;
+                                _Adorner(_imageContainer);
+                            }
                         }
-                    }
-                    else if(sel.GetType() == typeof(System.Windows.Controls.Image))
-                    {
-                        TextRange tr = new TextRange(_richTextBox.Selection.Start, _richTextBox.Selection.End);
-                        string s = textRangeToRtfString(tr);
-//                        System.Windows.Forms.SendKeys.Send("{DELETE}");
-                        Stream st = RtfStringToStream(s);
-                        _richTextBox.Selection.Load(st,DataFormats.Rtf);
-//                        _richTextBox.Selection.Load(RtfStringToStream(s),DataFormats.Rtf);
+                        else if (sel.GetType() == typeof(System.Windows.Controls.Image))
+                        {
+                            TextRange tr = new TextRange(_richTextBox.Selection.Start, _richTextBox.Selection.End);
+                            string s = textRangeToRtfString(tr);
+                            Stream st = RtfStringToStream(s);
+                            _richTextBox.Selection.Load(st, DataFormats.Rtf);
+                        }
                     }
                 }
             }
@@ -3050,16 +3057,16 @@ namespace DeskNote
 
             // Call a helper method to initialize the Thumbs 
             // with a customized cursors. 
-            BuildAdornerCorner(ref topLeft, Cursors.SizeNWSE);
-            BuildAdornerCorner(ref topRight, Cursors.SizeNESW);
-            BuildAdornerCorner(ref bottomLeft, Cursors.SizeNESW);
+        //    BuildAdornerCorner(ref topLeft, Cursors.SizeNWSE);
+        //    BuildAdornerCorner(ref topRight, Cursors.SizeNESW);
+        //    BuildAdornerCorner(ref bottomLeft, Cursors.SizeNESW);
             BuildAdornerCorner(ref bottomRight, Cursors.SizeNWSE);
 
             // Add handlers for resizing. 
-            bottomLeft.DragDelta += new DragDeltaEventHandler(HandleBottomLeft);
+        //    bottomLeft.DragDelta += new DragDeltaEventHandler(HandleBottomLeft);
             bottomRight.DragDelta += new DragDeltaEventHandler(HandleBottomRight);
-            topLeft.DragDelta += new DragDeltaEventHandler(HandleTopLeft);
-            topRight.DragDelta += new DragDeltaEventHandler(HandleTopRight);
+         //   topLeft.DragDelta += new DragDeltaEventHandler(HandleTopLeft);
+         //   topRight.DragDelta += new DragDeltaEventHandler(HandleTopRight);
         }
 
         // Handler for resizing from the bottom-right. 
@@ -3143,9 +3150,9 @@ namespace DeskNote
             double adornerWidth = this.DesiredSize.Width;
             double adornerHeight = this.DesiredSize.Height;
 
-            topLeft.Arrange(new Rect(-adornerWidth / 2, -adornerHeight / 2, adornerWidth, adornerHeight));
-            topRight.Arrange(new Rect(desiredWidth - adornerWidth / 2, -adornerHeight / 2, adornerWidth, adornerHeight));
-            bottomLeft.Arrange(new Rect(-adornerWidth / 2, desiredHeight - adornerHeight / 2, adornerWidth, adornerHeight));
+//            topLeft.Arrange(new Rect(-adornerWidth / 2, -adornerHeight / 2, adornerWidth, adornerHeight));
+//            topRight.Arrange(new Rect(desiredWidth - adornerWidth / 2, -adornerHeight / 2, adornerWidth, adornerHeight));
+ //           bottomLeft.Arrange(new Rect(-adornerWidth / 2, desiredHeight - adornerHeight / 2, adornerWidth, adornerHeight));
             bottomRight.Arrange(new Rect(desiredWidth - adornerWidth / 2, desiredHeight - adornerHeight / 2, adornerWidth, adornerHeight));
 
             // Return the final size. 
