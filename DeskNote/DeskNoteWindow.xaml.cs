@@ -671,20 +671,23 @@ namespace DeskNote
                             sel = ((Run)sel).NextInline;
 
                         }
-                        if (sel.GetType() == typeof(System.Windows.Documents.InlineUIContainer))
+                        if (sel != null)
                         {
-                            if (((InlineUIContainer)sel).Child.GetType() == typeof(System.Windows.Controls.Image))
+                            if (sel.GetType() == typeof(System.Windows.Documents.InlineUIContainer))
                             {
-                                _imageContainer = (InlineUIContainer)sel;
-                                _Adorner(_imageContainer);
+                                if (((InlineUIContainer)sel).Child.GetType() == typeof(System.Windows.Controls.Image))
+                                {
+                                    _imageContainer = (InlineUIContainer)sel;
+                                    _Adorner(_imageContainer);
+                                }
                             }
-                        }
-                        else if (sel.GetType() == typeof(System.Windows.Controls.Image))
-                        {
-                            TextRange tr = new TextRange(_richTextBox.Selection.Start, _richTextBox.Selection.End);
-                            string s = textRangeToRtfString(tr);
-                            Stream st = RtfStringToStream(s);
-                            _richTextBox.Selection.Load(st, DataFormats.Rtf);
+                            else if (sel.GetType() == typeof(System.Windows.Controls.Image))
+                            {
+                                TextRange tr = new TextRange(_richTextBox.Selection.Start, _richTextBox.Selection.End);
+                                string s = textRangeToRtfString(tr);
+                                Stream st = RtfStringToStream(s);
+                                _richTextBox.Selection.Load(st, DataFormats.Rtf);
+                            }
                         }
                     }
                 }

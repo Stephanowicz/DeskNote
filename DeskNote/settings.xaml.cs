@@ -78,6 +78,7 @@ namespace DeskNote
             lblBrightnessMatrix.Content = deskNoteForm._BckgrPicBrightness.ToString("#.##");
             lblSaturationMatrix.Content = deskNoteForm._BckgrPicSaturation.ToString("#.##");
             chkbGlass.IsChecked = deskNoteForm._blur;
+            chkbImage.IsChecked = deskNoteForm._BckgrPic;
             numUpDown.Value = (int)deskNoteForm.BorderThickness.Bottom;
             colorPickerBackground.SelectedColor = deskNoteForm._cBackColor;
             colorPickerText.SelectedColor = deskNoteForm._TextColor;
@@ -154,6 +155,27 @@ namespace DeskNote
         private void chkbGlass_Click(object sender, RoutedEventArgs e)
         {
             if (!_bInit) deskNoteForm._blur = ((bool)chkbGlass.IsChecked);
+        }
+        private void chkbImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_bInit)
+            {
+                deskNoteForm._BckgrPic = ((bool)chkbImage.IsChecked);
+                if (deskNoteForm._BckgrPic)
+                {
+                    groupBoxBckgr.IsEnabled = false;
+                    groupBoxBckgrPic.IsEnabled = true;
+                    _bckgrImage.Fill = deskNoteForm._Grid.Background;
+                    pMouse.X = colorPickRect.Margin.Left;
+                    pMouse.Y = colorPickRect.Margin.Top;
+                }
+                else
+                {
+                    groupBoxBckgr.IsEnabled = true;
+                    groupBoxBckgrPic.IsEnabled = false;
+                }
+
+            }
         }
         private void ColorPickerText_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
