@@ -79,7 +79,7 @@ namespace DeskNote
             lblSaturationMatrix.Content = deskNoteForm._BckgrPicSaturation.ToString("#.##");
             chkbGlass.IsChecked = deskNoteForm._blur;
             chkbImage.IsChecked = deskNoteForm._BckgrPic;
-            numUpDown.Value = (int)deskNoteForm.BorderThickness.Bottom;
+            numUpDownBorder.Value = (int)deskNoteForm.BorderThickness.Bottom;
             colorPickerBackground.SelectedColor = deskNoteForm._cBackColor;
             colorPickerText.SelectedColor = deskNoteForm._TextColor;
             fontSizeSlider.Value = deskNoteForm._cFontSize;
@@ -280,12 +280,12 @@ namespace DeskNote
             }
         }
 
-        private void numUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void numUpDownBorder_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (!_bInit)
             {
-                deskNoteForm._dblBorderThickness = (double)numUpDown.Value;
-                deskNoteForm.BorderThickness = new Thickness((double)numUpDown.Value);
+                deskNoteForm._dblBorderThickness = (double)numUpDownBorder.Value;
+                deskNoteForm.BorderThickness = new Thickness((double)numUpDownBorder.Value);
             }
 
         }
@@ -295,14 +295,14 @@ namespace DeskNote
 
             if(e.LeftButton == MouseButtonState.Pressed)
             {
-                pMouse = Mouse.GetPosition(gridBckrPic);
+                pMouse = Mouse.GetPosition(gridBckgrPic);
                 _getColorPixel();
             }
         }
 
         private void _bckgrImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            pMouse = Mouse.GetPosition(gridBckrPic);
+            pMouse = Mouse.GetPosition(gridBckgrPic);
             _getColorPixel();
         }
         Point pMouse;
@@ -311,10 +311,10 @@ namespace DeskNote
            // lblColorPick_Mouse.Content = "X: " + pMouse.X.ToString() + "  Y: " + pMouse.Y.ToString();
 
             // Use RenderTargetBitmap to get the visual, in case the image has been transformed.
-            var renderTargetBitmap = new RenderTargetBitmap((int)gridBckrPic.ActualWidth,
-                                                            (int)gridBckrPic.ActualHeight,
+            var renderTargetBitmap = new RenderTargetBitmap((int)gridBckgrPic.ActualWidth,
+                                                            (int)gridBckgrPic.ActualHeight,
                                                             96, 96, PixelFormats.Pbgra32);
-            renderTargetBitmap.Render(gridBckrPic);
+            renderTargetBitmap.Render(gridBckgrPic);
 
             // Make sure that the point is within the dimensions of the image.
             if ((pMouse.X < renderTargetBitmap.PixelWidth) && (pMouse.Y < renderTargetBitmap.PixelHeight))
