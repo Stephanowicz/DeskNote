@@ -159,7 +159,7 @@
                         <MenuItem x:Name="_rtbCM_Insert" Header="Insert (assign format)" Click="cmInsertText_Click" IsEnabled="False"/>
                         <MenuItem x:Name="_rtbCM_saveStream" Header="Save to rtf-file" Click="cmSaveRTF_Click" IsEnabled="True"/>
                         <MenuItem x:Name="_rtbCM_loadStream" Header="Load rtf-file" Click="cmLoadRTF_Click" IsEnabled="True"/>
-                        <MenuItem x:Name="_rtbCM_paste" Header="paste from HTML" Click="cmPasteHTML_click" IsEnabled="True"/>
+                        <MenuItem x:Name="_rtbCM_paste_html" Header="paste from HTML" Click="cmPasteHTML_click" IsEnabled="True"/>
                         <Separator/>
                         <MenuItem Header="scan for links" Click="scan4URL"/>
                         <MenuItem x:Name="_rtbCM_newURL" Header="create link" Click="_newURL" IsEnabled="False"/>
