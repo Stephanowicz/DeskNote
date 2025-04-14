@@ -50,20 +50,22 @@ When combining the CTRL-key and the buttons you can jump to the first or last pa
 # Settings  
 
 The settings can be opened either with the top-bar context menue or by double-clicking on the top-bar and holding the CTRL-key   
-On the first tab one can configure the background-color and additional text formattings  
-The background-color can only be adjusted when 'image' is not selected for background
+On the first tab one can configure general settings like the inner margin of the textarea and the background-color  
+The background-color can only be adjusted when 'image' is not selected for background  
+'Glass effect' blurs the background when the opacity is below 100%
 
-![image](https://github.com/user-attachments/assets/bf0e5f22-f390-478d-84c2-318982fe0a6e)  
+![image](https://github.com/user-attachments/assets/dd647935-1097-45b2-849a-8f3149d6e315)  
 
-When 'image' is selected for background one can adjust the different colorvalues on this tab  
+When 'image' is selected for background one can adjust here the different colorvalues on this tab  
 One may save the settings as a preset  
-![image](https://github.com/user-attachments/assets/88d0e3f5-ac81-46ac-9059-695577f6b4e0)  
+![image](https://github.com/user-attachments/assets/0ef05a24-cae4-47c9-88d2-e70343463112)  
+
 Though one can load huge pictures as background you shouldn't do that as it unnecessarily eats up memory - better use a smaller copy  
+  
 On the last tab on can add different fonts as favourites - they then will be displayed on top of the font list  
-![image](https://github.com/user-attachments/assets/a2c17768-46ee-460a-aeef-b9e5029fcbad)  
-![image](https://github.com/user-attachments/assets/384f81a4-4085-4921-93dc-d6a52ffbe2be)  
-
-The default settings are used for new pages   
-
+![image](https://github.com/user-attachments/assets/dc3af74d-80fc-4a6f-812e-e4032582acdb)  
+  
+The Text-default settings are used for new pages   
+ 
 
 
